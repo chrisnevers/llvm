@@ -50,20 +50,33 @@
 ; }
 ; =>
 
-declare external i32 @printint(i32)
+; load and print int via runtime
+; declare external void @printint(i32)
 
-define i32 @main() {
-    %1 = alloca i32, align 4
-    %a = alloca i32, align 4
-    %b = alloca i32, align 4
-    store i32 0, i32* %1
-    store i32 32, i32* %a, align 4
-    store i32 16, i32* %b, align 4
-    %2 = load i32, i32* %a, align 4
-    %3 = load i32, i32* %b, align 4
-    %4 = add nsw i32 %2, %3
-    call i32 @printint(i32 %4)
-    ret i32 %4
+; define i32 @main() {
+;     %1 = alloca i32, align 4
+;     %a = alloca i32, align 4
+;     %b = alloca i32, align 4
+;     store i32 0, i32* %1
+;     store i32 32, i32* %a, align 4
+;     store i32 16, i32* %b, align 4
+;     %2 = load i32, i32* %a, align 4
+;     %3 = load i32, i32* %b, align 4
+;     %4 = add nsw i32 %2, %3
+;     call void @printint(i32 %4)
+;     ret i32 %4
+; }
+
+
+; load and print string via runtime
+declare external void @printstring(i8*)
+
+@mystr = internal constant [12 x i8] c"Hello there!"
+
+define void @main() {
+    %str = getelementptr [12 x i8], [12 x i8]* @mystr, i32 0, i64 0
+    call void @printstring (i8* %str) nounwind
+    ret void
 }
 
 
