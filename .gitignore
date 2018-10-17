@@ -1,0 +1,4 @@
+out
+runtime.o
+main.s
+main.o
